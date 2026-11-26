@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DynaCartoon turns one illustration and user-specified forces into a stylized video using 3D physics and sketch-guided cartoonization.">
+  <meta name="theme-color" content="#15111c">
+  <title>DynaCartoon · ACM Multimedia 2026</title>
+  <link rel="stylesheet" href="style.css?v=15">
+  <script src="main.js?v=15" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <a href="#main" class="brand"><span class="brand-mark" aria-hidden="true"></span>DynaCartoon</a>
+      <nav aria-label="Project sections">
+        <a href="#film">Film</a>
+        <a href="#examples">Input &amp; output</a>
+        <a href="#reruns">Comparisons</a>
+        <a href="#method">Method</a>
+      </nav>
+      <a class="nav-paper" href="https://doi.org/10.1145/3767308.3835019">ACM paper</a>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="headline">
+      <div class="hero-media" aria-hidden="true">
+        <video id="hero-video" loop muted playsinline preload="none" poster="assets/cloth_demo1.webp" data-src="assets/cloth_demo1.mp4"></video>
+      </div>
+      <div class="shell hero-grid">
+        <div class="hero-copy">
+          <h1 id="headline"><img src="assets/conference-wordmark.webp" alt="DynaCartoon" width="1604" height="220"></h1>
+          <p class="hero-title">3D Dynamics-Guided Cartoon Video Generation<br>from a Single Illustration and Forces</p>
+          <p class="authors">Zhuo Chen, Yule Quan, Haotian Mao, Yang Zhao and Xubo Yang</p>
+          <p class="affiliation">Shanghai Jiao Tong University · ACM Multimedia 2026</p>
+          <div class="actions">
+            <a class="button primary" href="#film"><span class="play-glyph" aria-hidden="true"></span>Watch the film</a>
+            <a class="button outline" href="https://doi.org/10.1145/3767308.3835019">Read the paper</a>
+          </div>
+        </div>
+      </div>
+      <div class="shell hero-controls">
+        <span>DynaCartoon output · Wind-driven fabric</span>
+        <button id="hero-motion" class="button outline compact" type="button" aria-controls="hero-video">Play background</button>
+      </div>
+    </section>
+
+    <section id="film" class="section shell">
+      <div class="section-head">
+        <div><p class="eyebrow">Project film</p><h2>From illustration to motion</h2></div>
+        <a class="text-link" href="assets/dynacartoon-film.mp4?v=14" download="DynaCartoon_Research_Film.mp4">Download MP4</a>
+      </div>
+      <figure class="film-frame">
+        <video controls playsinline preload="metadata" poster="assets/film-poster.webp" aria-label="DynaCartoon research film with music and on-screen labels">
+          <source src="assets/dynacartoon-film.mp4?v=14" type="video/mp4">
+          <a href="assets/dynacartoon-film.mp4?v=14">Open the DynaCartoon film</a>
+        </video>
+        <figcaption>Music by Kevin MacLeod, <a href="https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1700030">Tech Live</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Edited for length and volume. Baseline clips are AI animations based on Figure 4.</figcaption>
+      </figure>
+    </section>
+
+    <section id="examples" class="section examples">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="eyebrow">Motion examples</p><h2>From an applied force to a video</h2></div>
+        </div>
+        <div class="chips example-tabs" role="group" aria-label="Input and output scene">
+          <button type="button" data-input="water-input-force" data-clip="water_demo2" aria-pressed="true">Water pouring</button>
+          <button type="button" data-input="hair-input-force" data-clip="hair_demo1" aria-pressed="false">Hair in the wind</button>
+          <button type="button" data-input="dress-input" data-clip="cloth_demo1" aria-pressed="false">Wind-driven dress</button>
+          <button type="button" data-input="laundry-input" data-clip="cloth_demo2" aria-pressed="false">Hanging laundry</button>
+          <button type="button" data-input="flag-input" data-clip="flag_demo1" aria-pressed="false">Flag</button>
+          <button type="button" data-input="two-pours-input" data-clip="water_demo1" aria-pressed="false">Two pours</button>
+          <button type="button" data-input="boat-input" data-clip="boat_demo1" aria-pressed="false">Toy boat</button>
+          <button type="button" data-input="fire-input" data-clip="fire_demo1" aria-pressed="false">Flame effects</button>
+        </div>
+        <div class="example-grid">
+          <figure>
+            <p class="media-label">Input</p>
+            <img id="example-input" src="assets/water-input-force.webp" width="900" height="600" alt="The paper’s input illustration for water pouring, with blue gravity marks.">
+          </figure>
+          <figure>
+            <p class="media-label">DynaCartoon output</p>
+            <video id="example-output" controls playsinline muted loop preload="metadata" poster="assets/water_demo2.webp" src="assets/water_demo2.mp4" aria-label="DynaCartoon output for water pouring"></video>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="reruns" class="section shell">
+      <div class="section-head"><h2>Figure 4 comparisons</h2></div>
+      <article class="rerun-row" data-sync>
+        <div class="rerun-heading"><h3>Water pouring</h3><button type="button" class="button outline compact" data-play-together>Play together</button></div>
+        <div class="rerun-grid">
+          <figure><img src="assets/water-input-force.webp" loading="lazy" alt="Input"><figcaption>Input</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/water_demo2.webp?v=14" src="assets/water_demo2.mp4?v=14" aria-label="DynaCartoon"></video><figcaption>DynaCartoon</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/water-physgen3d-animated-reference.webp?v=14" src="assets/water-physgen3d-animated-reference.mp4?v=14" aria-label="PhysGen3D"></video><figcaption>PhysGen3D</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/water-wonderplay-animated-reference.webp?v=14" src="assets/water-wonderplay-animated-reference.mp4?v=14" aria-label="WonderPlay"></video><figcaption>WonderPlay</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/water-h3-veo-reference.webp?v=14" src="assets/water-h3-veo-reference.mp4?v=14" aria-label="Veo 3"></video><figcaption>Veo 3</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/water-h3-gen4-reference.webp?v=14" src="assets/water-h3-gen4-reference.mp4?v=14" aria-label="Gen-4"></video><figcaption>Gen-4</figcaption></figure>
+        </div>
+      </article>
+      <article class="rerun-row" data-sync>
+        <div class="rerun-heading"><h3>Hair in the wind</h3><button type="button" class="button outline compact" data-play-together>Play together</button></div>
+        <div class="rerun-grid">
+          <figure><img src="assets/hair-input-force.webp" loading="lazy" alt="Input"><figcaption>Input</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/hair_demo1.webp?v=14" src="assets/hair_demo1.mp4?v=14" aria-label="DynaCartoon"></video><figcaption>DynaCartoon</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/hair-physgen3d-animated-reference.webp?v=14" src="assets/hair-physgen3d-animated-reference.mp4?v=14" aria-label="PhysGen3D"></video><figcaption>PhysGen3D</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/hair-wonderplay-animated-reference.webp?v=14" src="assets/hair-wonderplay-animated-reference.mp4?v=14" aria-label="WonderPlay"></video><figcaption>WonderPlay</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/hair-h3-veo-reference.webp?v=14" src="assets/hair-h3-veo-reference.mp4?v=14" aria-label="Veo 3"></video><figcaption>Veo 3</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/hair-h3-gen4-reference.webp?v=14" src="assets/hair-h3-gen4-reference.mp4?v=14" aria-label="Gen-4"></video><figcaption>Gen-4</figcaption></figure>
+        </div>
+      </article>
+      <article class="rerun-row" data-sync>
+        <div class="rerun-heading"><h3>Basketball bounce</h3><button type="button" class="button outline compact" data-play-together>Play together</button></div>
+        <div class="rerun-grid">
+          <figure><img src="assets/basketball-input-1.webp" loading="lazy" alt="Input"><figcaption>Input</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/basketball-release.webp?v=14" src="assets/basketball-release.mp4?v=14" aria-label="DynaCartoon"></video><figcaption>DynaCartoon</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/basketball-physgen3d-animated-reference.webp?v=14" src="assets/basketball-physgen3d-animated-reference.mp4?v=14" aria-label="PhysGen3D"></video><figcaption>PhysGen3D</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/basketball-wonderplay-animated-reference.webp?v=14" src="assets/basketball-wonderplay-animated-reference.mp4?v=14" aria-label="WonderPlay"></video><figcaption>WonderPlay</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/basketball-h3-veo-reference.webp?v=14" src="assets/basketball-h3-veo-reference.mp4?v=14" aria-label="Veo 3"></video><figcaption>Veo 3</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/basketball-h3-gen4-reference.webp?v=14" src="assets/basketball-h3-gen4-reference.mp4?v=14" aria-label="Gen-4"></video><figcaption>Gen-4</figcaption></figure>
+        </div>
+      </article>
+      <article class="rerun-row" data-sync>
+        <div class="rerun-heading"><h3>Bucket toppling</h3><button type="button" class="button outline compact" data-play-together>Play together</button></div>
+        <div class="rerun-grid">
+          <figure><img src="assets/bucket-input-1.webp" loading="lazy" alt="Input"><figcaption>Input</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/bucket-release.webp?v=14" src="assets/bucket-release.mp4?v=14" aria-label="DynaCartoon"></video><figcaption>DynaCartoon</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/bucket-physgen3d-animated-reference.webp?v=14" src="assets/bucket-physgen3d-animated-reference.mp4?v=14" aria-label="PhysGen3D"></video><figcaption>PhysGen3D</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/bucket-wonderplay-animated-reference.webp?v=14" src="assets/bucket-wonderplay-animated-reference.mp4?v=14" aria-label="WonderPlay"></video><figcaption>WonderPlay</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/bucket-h3-veo-reference.webp?v=14" src="assets/bucket-h3-veo-reference.mp4?v=14" aria-label="Veo 3"></video><figcaption>Veo 3</figcaption></figure>
+          <figure><video controls playsinline muted preload="none" poster="assets/bucket-h3-gen4-reference.webp?v=14" src="assets/bucket-h3-gen4-reference.mp4?v=14" aria-label="Gen-4"></video><figcaption>Gen-4</figcaption></figure>
+        </div>
+      </article>
+    </section>
+
+    <section id="method" class="section method">
+      <div class="shell">
+        <div class="section-head"><div><p class="eyebrow">Method</p><h2>Physics first, cartoonization second</h2></div></div>
+        <p class="section-copy">DynaCartoon reconstructs a 3D scene from the illustration and simulates how its objects respond to forces. Sketches extracted from the simulation guide a learned video model.</p>
+        <figure class="paper-figure">
+          <img src="assets/method.webp" width="1575" height="642" loading="lazy" alt="The method takes an illustration and forces, reconstructs and simulates a 3D scene, then uses sketch-guided video cartoonization to generate frames.">
+          <figcaption>Method overview from the published paper.</figcaption>
+        </figure>
+        <div class="method-grid">
+          <article><h3>Dynamics-constrained 3D space</h3><p>Scene reconstruction provides object geometry and physical attributes. Hybrid simulation translates the user’s forces into motion for rigid bodies, fluids and deformable objects.</p></article>
+          <article><h3>Sketch-guided video cartoonization</h3><p>Background Dynamic Enhancement adds motion to the surrounding scene. Foreground Deformation Compensation adds expressive object deformation to the simulation-guided result.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="evaluation" class="section shell">
+      <div class="section-head"><div><p class="eyebrow">Experiments</p><h2>Quantitative results</h2></div></div>
+      <p class="section-copy">The paper evaluates 32 scenarios. VBench measures consistency, smoothness and image quality. GLM-4.5V scores physical realism and visual quality.</p>
+      <div class="table-wrap" role="region" tabindex="0" aria-label="Quantitative comparison table">
+        <table>
+          <thead><tr><th scope="col">Method</th><th scope="col" abbr="Subject Consistency">SC</th><th scope="col" abbr="Motion Smoothness">MS</th><th scope="col" abbr="Aesthetic Quality">AQ</th><th scope="col" abbr="Imaging Quality">IQ</th><th scope="col" abbr="Physical Realism">PR</th><th scope="col" abbr="Visual Quality">VQ</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">PhysGen3D</th><td>0.207</td><td>0.995</td><td>0.502</td><td>0.536</td><td>0.687</td><td>0.642</td></tr>
+            <tr><th scope="row">WonderPlay</th><td>0.204</td><td>0.994</td><td>0.511</td><td>0.548</td><td>0.691</td><td>0.651</td></tr>
+            <tr><th scope="row">Gen-4</th><td>0.212</td><td>0.995</td><td>0.578</td><td>0.699</td><td>0.573</td><td>0.706</td></tr>
+            <tr><th scope="row">Veo 3</th><td>0.209</td><td>0.992</td><td>0.580</td><td>0.719</td><td>0.642</td><td>0.684</td></tr>
+            <tr class="ours-row"><th scope="row">DynaCartoon</th><td>0.215</td><td>0.996</td><td>0.614</td><td>0.723</td><td>0.704</td><td>0.742</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="source-note">Scores reproduced from Table 1. Higher is better for all six metrics.</p>
+    </section>
+
+    <section id="paper" class="section paper-section">
+      <div class="shell paper-inner">
+        <div><p class="eyebrow">ACM Multimedia 2026</p><h2>Read and cite</h2>
+          <p>DynaCartoon: 3D Dynamics-Guided Cartoon Video Generation from a Single Illustration and Forces</p>
+          <a class="button outline" href="https://doi.org/10.1145/3767308.3835019">View publication</a>
+        </div>
+        <div class="bib">
+          <div><strong>BibTeX</strong><button id="copy-bib" class="text-link" type="button">Copy citation</button></div>
+          <pre id="bibtex">@inproceedings{chen2026dynacartoon,
+  title = {DynaCartoon: 3D Dynamics-Guided Cartoon Video
+    Generation from a Single Illustration and Forces},
+  author = {Chen, Zhuo and Quan, Yule and Mao, Haotian
+    and Zhao, Yang and Yang, Xubo},
+  booktitle = {Proceedings of the 34th ACM International
+    Conference on Multimedia},
+  year = {2026},
+  doi = {10.1145/3767308.3835019}
+}</pre>
+          <p id="copy-result" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="shell footer"><span>DynaCartoon · Shanghai Jiao Tong University</span><span>Paper figures and supplementary videos by the authors.</span></footer>
+</body>
+</html>
